@@ -12,7 +12,7 @@ typedef struct console_s
 
 static console_s console;
 
-static void console_putc(void* p, char c)
+void console_putc(void* p, char c)
 {
 	if(c == '\n' || (console.x + 8) > SUB_WIDTH)
 	{

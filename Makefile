@@ -15,11 +15,11 @@ DEP_DIR:=obj
 
 INCPATHS=-Iinclude
 
-THUMBFLAGS=-mthumb -mthumb-interwork
-CFLAGS=-std=gnu99 -Os -g -mword-relocations -fomit-frame-pointer -ffast-math $(INCPATHS)
-C9FLAGS=-mcpu=arm946e-s -march=armv5te -mlittle-endian
-LDFLAGS=
-OCFLAGS=--set-section-flags .bss=alloc,load,contents
+THUMBFLAGS=-mthumb #-mthumb-interwork
+CFLAGS=$(THUMBFLAGS) -std=gnu99 -Os -g -mword-relocations -fomit-frame-pointer -fPIC -ffast-math $(INCPATHS)
+C9FLAGS=-mcpu=arm946e-s -march=armv5te -mlittle-endian -fPIC
+LDFLAGS=-fPIC -Wl,--use-blx
+OCFLAGS=--set-section-flags .bss=alloc,load,contents -fPIC
 
 OBJS:=$(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(wildcard $(SRC_DIR)/*.c))
 OBJS+=$(patsubst $(SRC_DIR)/%.s, $(OBJ_DIR)/%.o, $(wildcard $(SRC_DIR)/*.s))

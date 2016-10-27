@@ -72,13 +72,13 @@ void draw_clear_sub(u32 rgb)
 	*((u8*)buffer + offset++) = (rgb >> 16) & 0xFF;\
 }
 
-inline
+static inline
 void draw_pixel_topleft(u16 x, u16 y, u32 rgb)
 {
 	SET_PIXEL(draw.top_left, x, y, rgb);
 }
 
-inline
+static inline
 void draw_pixel_topright(u16 x, u16 y, u32 rgb)
 {
 	SET_PIXEL(draw.top_right, x, y, rgb);

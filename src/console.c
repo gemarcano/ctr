@@ -2,14 +2,6 @@
 #include "ctr/draw.h"
 #include "ctr/printf.h"
 
-typedef struct console_s
-{
-	u32 fg;
-	u32 bg;
-	u32 x;
-	u32 y;
-} console_s;
-
 static console_s console;
 
 void console_putc(void* p, char c)
@@ -30,8 +22,20 @@ void console_putc(void* p, char c)
 
 	if(c == '\r' || c == '\n') return;
 
+	draw_rect(SCREEN_SUB, console.x, console.y, 8, 8, console.bg);
 	draw_char(SCREEN_SUB, console.x, console.y, console.fg, c);
 	console.x += 8;
+}
+
+void console_adjust_cursor(size_t x, size_t y)
+{
+	console.x = x;
+	console.y = y;
+}
+
+void console_clear(void)
+{
+	draw_clear_screen(SCREEN_SUB, console.bg);
 }
 
 void console_init(u32 fg, u32 bg)
@@ -44,3 +48,14 @@ void console_init(u32 fg, u32 bg)
 	draw_clear_screen(SCREEN_SUB, bg);
 	init_printf(NULL, console_putc);
 }
+
+void console_fg_color(uint32_t color)
+{
+	console.fg = color;
+}
+
+void console_bg_color(uint32_t color)
+{
+	console.bg = color;
+}
+
